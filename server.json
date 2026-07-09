@@ -1,0 +1,11 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.StelarDigital/stelar-signals-mcp",
+  "description": "Crypto market-signal MCP tools (regime, sentiment, price, risk) via RapidAPI. Needs RAPIDAPI_KEY",
+  "repository": {
+    "url": "https://github.com/StelarDigital/stelar-signals-mcp",
+    "source": "github"
+  },
+  "version": "1.0.0",
+  "websiteUrl": "https://github.com/StelarDigital/stelar-signals-mcp#install"
+}
