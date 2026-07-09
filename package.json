@@ -1,0 +1,41 @@
+{
+  "name": "stelar-signals-mcp",
+  "version": "1.0.0",
+  "description": "MCP server exposing Stelar Digital's crypto market-signal and Claude-powered utility APIs (regime, sentiment, summarize, factcheck, pricecheck, token risk) to any MCP-compatible AI agent.",
+  "type": "module",
+  "main": "server.js",
+  "bin": {
+    "stelar-signals-mcp": "server.js"
+  },
+  "files": [
+    "server.js",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "crypto",
+    "trading",
+    "signals",
+    "rapidapi",
+    "ai-agent"
+  ],
+  "author": "Stelar Digital",
+  "license": "MIT",
+  "homepage": "https://stelardigital.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stelardigital/stelar-signals-mcp"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "zod": "^4.4.3"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

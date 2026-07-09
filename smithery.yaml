@@ -1,0 +1,28 @@
+startCommand:
+  type: stdio
+  configSchema:
+    type: object
+    properties:
+      rapidApiKey:
+        type: string
+        description: >-
+          Your RapidAPI key for the Stelar Crypto Signals AI Toolkit API.
+          Get a free key (50 req/mo) at
+          https://rapidapi.com/StelarDigital/api/stelar-crypto-signals-ai-toolkit?src=mcp
+      rapidApiHost:
+        type: string
+        description: >-
+          RapidAPI gateway host for this listing (defaults to
+          stelar-crypto-signals-ai-toolkit.p.rapidapi.com; only override if
+          RapidAPI shows a different host on your dashboard).
+    required:
+      - rapidApiKey
+  commandFunction: |-
+    (config) => ({
+      command: 'node',
+      args: ['server.js'],
+      env: {
+        RAPIDAPI_KEY: config.rapidApiKey,
+        RAPIDAPI_HOST: config.rapidApiHost || 'stelar-crypto-signals-ai-toolkit.p.rapidapi.com'
+      }
+    })
