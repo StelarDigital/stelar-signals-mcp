@@ -41,7 +41,7 @@ Add to your `claude_desktop_config.json`:
   "mcpServers": {
     "stelar-signals": {
       "command": "npx",
-      "args": ["-y", "stelar-signals-mcp"],
+      "args": ["-y", "github:StelarDigital/stelar-signals-mcp"],
       "env": {
         "RAPIDAPI_KEY": "YOUR_RAPIDAPI_KEY"
       }
@@ -53,7 +53,7 @@ Add to your `claude_desktop_config.json`:
 ### Claude Code
 
 ```
-claude mcp add stelar-signals -e RAPIDAPI_KEY=YOUR_RAPIDAPI_KEY -- npx -y stelar-signals-mcp
+claude mcp add stelar-signals -e RAPIDAPI_KEY=YOUR_RAPIDAPI_KEY -- npx -y github:StelarDigital/stelar-signals-mcp
 ```
 
 ### Run directly
