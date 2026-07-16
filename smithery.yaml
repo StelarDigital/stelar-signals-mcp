@@ -9,6 +9,8 @@ startCommand:
           Your RapidAPI key for the Stelar Crypto Signals AI Toolkit API.
           Get a free key (50 req/mo) at
           https://rapidapi.com/StelarDigital/api/stelar-crypto-signals-ai-toolkit?src=mcp
+          (only needed for the 6 free-with-key tools; 6 additional tools are
+          paid per-call via x402/USDC on Base and need no key).
       rapidApiHost:
         type: string
         description: >-
