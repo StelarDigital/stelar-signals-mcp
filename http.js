@@ -39,6 +39,20 @@ function parseConfig(url, req) {
   return { apiKey, host: host || undefined };
 }
 
+// MCPize gateway detection: their proxy adds X-MCPize-Proxy-Secret to every
+// forwarded request AFTER collecting x402 payment from the agent. A verified
+// secret means the call is already paid — serve data via the secret-gated
+// origin path instead of returning our own payment envelope.
+const MCPIZE_PROXY_SECRET = process.env.MCPIZE_PROXY_SECRET || "";
+function isMcpizePaid(req) {
+  if (!MCPIZE_PROXY_SECRET) return false;
+  const supplied = req.headers["x-mcpize-proxy-secret"] || "";
+  if (!supplied || supplied.length !== MCPIZE_PROXY_SECRET.length) return false;
+  let diff = 0;
+  for (let i = 0; i < supplied.length; i++) diff |= supplied.charCodeAt(i) ^ MCPIZE_PROXY_SECRET.charCodeAt(i);
+  return diff === 0;
+}
+
 function sendJson(res, status, body) {
   if (res.headersSent) return;
   res.writeHead(status, { "Content-Type": "application/json" });
@@ -48,7 +62,8 @@ function sendJson(res, status, body) {
 const server = http.createServer(async (req, res) => {
   const url = new URL(req.url, `http://${HOST}:${PORT}`);
   const { apiKey, host } = parseConfig(url, req);
-  console.log(`${req.method} ${url.pathname} has-key=${apiKey ? "yes" : "no"}`);
+  const mcpizePaid = isMcpizePaid(req);
+  console.log(`${req.method} ${url.pathname} has-key=${apiKey ? "yes" : "no"} mcpize-paid=${mcpizePaid ? "yes" : "no"}`);
 
   try {
     if (url.pathname === "/.well-known/mcp/server-card.json" && req.method === "GET") {
@@ -61,7 +76,7 @@ const server = http.createServer(async (req, res) => {
       return;
     }
 
-    const mcpServer = buildServer({ apiKey, host });
+    const mcpServer = buildServer({ apiKey, host, mcpizePaid });
     const transport = new StreamableHTTPServerTransport({ sessionIdGenerator: undefined });
     await mcpServer.connect(transport);
 
@@ -80,6 +95,20 @@ const server = http.createServer(async (req, res) => {
           return;
         }
       }
+    }
+
+    // Receipt instrument (2026-07-12): log the JSON-RPC method so the daily
+    // counter can separate real tool invocations (tools/call) from discovery-
+    // crawler handshakes (initialize/tools/list). Without this, "N calls/day"
+    // conflates registry probes with actual agent demand — the 07-24 MCP judge
+    // needs the real tool-call count, not the handshake-inflated total.
+    const mcpMethod = Array.isArray(parsedBody)
+      ? "batch"
+      : parsedBody && typeof parsedBody === "object"
+        ? parsedBody.method
+        : undefined;
+    if (mcpMethod) {
+      console.log(`MCP method=${mcpMethod} has-key=${apiKey ? "yes" : "no"}`);
     }
 
     res.on("close", () => {

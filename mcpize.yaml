@@ -1,0 +1,18 @@
+pricing:
+  protocol: "x402"
+  network: "base"
+  recipient: "0x32d711C66dD1AD0c42D0cFe48e58ee5f2dE7c243"
+  asset: "usdc"
+  tools:
+    - name: "telemetry"
+      price: "0.01"
+    - name: "regime"
+      price: "0.03"
+    - name: "gridparams"
+      price: "0.05"
+    - name: "sentiment"
+      price: "0.01"
+    - name: "risk"
+      price: "0.02"
+    - name: "price"
+      price: "0.01"
