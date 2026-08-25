@@ -88,6 +88,7 @@ export function buildServer({ apiKey, host, mcpizePaid = false } = {}) {
     "crypto_regime",
     {
       title: "Crypto market regime classifier",
+      annotations: { readOnlyHint: true, destructiveHint: false },
       description:
         "Market regime (chop / trend_up / trend_down / high_vol) for a major crypto pair, " +
         "powered by the same classifier that steers a live production grid-trading bot. " +
@@ -106,6 +107,7 @@ export function buildServer({ apiKey, host, mcpizePaid = false } = {}) {
     "crypto_sentiment",
     {
       title: "Crypto / text sentiment scorer",
+      annotations: { readOnlyHint: true, destructiveHint: false },
       description:
         "Sentiment score (-1 to +1) with a bullish/neutral/bearish label, for either raw text " +
         "or a crypto asset's recent price action, via an LLM. Give it EXACTLY ONE of `text` " +
@@ -127,6 +129,7 @@ export function buildServer({ apiKey, host, mcpizePaid = false } = {}) {
     "summarize",
     {
       title: "URL / text summarizer",
+      annotations: { readOnlyHint: true, destructiveHint: false },
       description:
         "Tight 3-5 sentence summary of a URL or a raw text block, via an LLM. Give it EXACTLY " +
         "ONE of `url` (a page to fetch and summarize) or `text` (raw text to summarize directly). " +
@@ -144,6 +147,7 @@ export function buildServer({ apiKey, host, mcpizePaid = false } = {}) {
     "factcheck",
     {
       title: "Fact-check a claim",
+      annotations: { readOnlyHint: true, destructiveHint: false },
       description:
         "Fact-check verdict (true / false / uncertain) with a confidence score (0-1) and a " +
         "1-2 sentence reasoning for any factual claim, via an LLM. Useful for content " +
@@ -160,6 +164,7 @@ export function buildServer({ apiKey, host, mcpizePaid = false } = {}) {
     "pricecheck",
     {
       title: "Crypto price + change snapshot",
+      annotations: { readOnlyHint: true, destructiveHint: false },
       description:
         "Current price, 24h and 7d percent change, and a simple bullish/bearish/neutral signal " +
         "for a major crypto asset. Low-latency market-data lookup for dashboards, bots, and " +
@@ -175,6 +180,7 @@ export function buildServer({ apiKey, host, mcpizePaid = false } = {}) {
     "token_risk",
     {
       title: "Crypto volatility / drawdown risk regime",
+      annotations: { readOnlyHint: true, destructiveHint: false },
       description:
         "Volatility / drawdown risk regime (low / med / high) for a major crypto asset, " +
         "extending the same classifier behind crypto_regime. Tells an agent whether current " +
@@ -268,6 +274,7 @@ export function buildServer({ apiKey, host, mcpizePaid = false } = {}) {
     "telemetry",
     {
       title: "Live grid-bot P&L telemetry (paid: $0.005/call via x402)",
+      annotations: { readOnlyHint: true, destructiveHint: false },
       description:
         "PAID PER CALL ($0.005 USDC on Base via x402 — no signup, no API key). Live, " +
         "exchange-ledger-reconciled profit-and-loss of a real production crypto grid-trading " +
@@ -282,6 +289,7 @@ export function buildServer({ apiKey, host, mcpizePaid = false } = {}) {
     "regime",
     {
       title: "Market-regime classification (paid: $0.03/call via x402)",
+      annotations: { readOnlyHint: true, destructiveHint: false },
       description:
         "PAID PER CALL ($0.03 USDC on Base via x402). Market regime (chop / trend_up / " +
         "trend_down / high_vol) plus a grid-suitability verdict, from the classifier steering " +
@@ -297,6 +305,7 @@ export function buildServer({ apiKey, host, mcpizePaid = false } = {}) {
     "gridparams",
     {
       title: "Grid-trading parameter recommendation (paid: $0.05/call via x402)",
+      annotations: { readOnlyHint: true, destructiveHint: false },
       description:
         "PAID PER CALL ($0.05 USDC on Base via x402). Recommended grid-trading parameters " +
         "(range, spacing, order size) for a pair and capital amount, from a live production " +
@@ -313,6 +322,7 @@ export function buildServer({ apiKey, host, mcpizePaid = false } = {}) {
     "sentiment",
     {
       title: "Crypto/text sentiment score (paid: $0.005/call via x402)",
+      annotations: { readOnlyHint: true, destructiveHint: false },
       description:
         "PAID PER CALL ($0.005 USDC on Base via x402). Sentiment score (-1..+1) with label " +
         "for EXACTLY ONE of `text` or `asset`. Unpaid calls return the exact x402 payment terms.",
@@ -328,6 +338,7 @@ export function buildServer({ apiKey, host, mcpizePaid = false } = {}) {
     "risk",
     {
       title: "Volatility/drawdown risk regime (paid: $0.02/call via x402)",
+      annotations: { readOnlyHint: true, destructiveHint: false },
       description:
         "PAID PER CALL ($0.02 USDC on Base via x402). Volatility / drawdown risk regime " +
         "(low / med / high) vs the 30-day baseline for a major crypto asset. Unpaid calls " +
@@ -343,6 +354,7 @@ export function buildServer({ apiKey, host, mcpizePaid = false } = {}) {
     "price",
     {
       title: "Crypto price + change snapshot (paid: $0.005/call via x402)",
+      annotations: { readOnlyHint: true, destructiveHint: false },
       description:
         "PAID PER CALL ($0.005 USDC on Base via x402). Current price, 24h/7d change, and a " +
         "simple signal for a major crypto asset. Unpaid calls return the exact x402 payment terms.",
