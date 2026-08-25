@@ -1,7 +1,7 @@
 {
   "name": "stelar-signals-mcp",
-  "version": "1.0.0",
-  "description": "MCP server exposing Stelar Digital's crypto market-signal and Claude-powered utility APIs (regime, sentiment, summarize, factcheck, pricecheck, token risk) to any MCP-compatible AI agent.",
+  "version": "1.1.0",
+  "description": "MCP server with 6 pay-per-call x402 tools (USDC on Base, no signup and no API key) for crypto price, sentiment, volatility risk, market regime, grid parameters and live portfolio telemetry, plus 6 RapidAPI-keyed free-tier tools.",
   "type": "module",
   "main": "server.js",
   "bin": {
@@ -17,19 +17,22 @@
   },
   "keywords": [
     "mcp",
-    "model-context-protocol",
+    "modelcontextprotocol",
+    "x402",
+    "agent",
     "crypto",
+    "usdc",
+    "base",
+    "pay-per-call",
     "trading",
-    "signals",
-    "rapidapi",
     "ai-agent"
   ],
   "author": "Stelar Digital",
   "license": "MIT",
-  "homepage": "https://stelardigital.com",
+  "homepage": "https://api.stelardigital.com",
   "repository": {
     "type": "git",
-    "url": "https://github.com/stelardigital/stelar-signals-mcp"
+    "url": "git+https://github.com/StelarDigital/stelar-signals-mcp.git"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.29.0",
