@@ -1,6 +1,7 @@
 {
   "name": "stelar-signals-mcp",
-  "version": "1.1.0",
+  "mcpName": "io.github.StelarDigital/stelar-signals-mcp",
+  "version": "1.1.2",
   "description": "MCP server with 6 pay-per-call x402 tools (USDC on Base, no signup and no API key) for crypto price, sentiment, volatility risk, market regime, grid parameters and live portfolio telemetry, plus 6 RapidAPI-keyed free-tier tools.",
   "type": "module",
   "main": "server.js",
