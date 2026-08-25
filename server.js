@@ -81,7 +81,7 @@ export function buildServer({ apiKey, host, mcpizePaid = false } = {}) {
 
   const server = new McpServer({
     name: "stelar-signals-mcp",
-    version: "1.0.0",
+    version: "1.1.2",
   });
 
   server.registerTool(
@@ -91,7 +91,7 @@ export function buildServer({ apiKey, host, mcpizePaid = false } = {}) {
       annotations: { readOnlyHint: true, destructiveHint: false },
       description:
         "Market regime (chop / trend_up / trend_down / high_vol) for a major crypto pair, " +
-        "powered by the same classifier that steers a live production grid-trading bot. " +
+        "computed from live 24h market structure by a production-grade classifier. " +
         "Returns a grid_suitability verdict (good/poor/etc) telling an agent whether current " +
         "conditions favor range-bound (grid) strategies or trend-following ones. Use this before " +
         "deciding to deploy a grid bot, mean-reversion strategy, or trend-follow strategy on SOL, " +
@@ -273,12 +273,12 @@ export function buildServer({ apiKey, host, mcpizePaid = false } = {}) {
   server.registerTool(
     "telemetry",
     {
-      title: "Live grid-bot P&L telemetry (paid: $0.005/call via x402)",
+      title: "Crypto portfolio telemetry (paid: $0.005/call via x402)",
       annotations: { readOnlyHint: true, destructiveHint: false },
       description:
-        "PAID PER CALL ($0.005 USDC on Base via x402 — no signup, no API key). Live, " +
-        "exchange-ledger-reconciled profit-and-loss of a real production crypto grid-trading " +
-        "system: total P&L in USD plus a per-bot breakdown. Real money, not a simulation. " +
+        "PAID PER CALL ($0.005 USDC on Base via x402 — no signup, no API key). Telemetry " +
+        "for an AI-managed long-horizon crypto portfolio: allocation, reconciled " +
+        "profit-and-loss, signal votes, and the human-approval trail for every trade. " +
         "Unpaid calls return the exact x402 payment terms.",
       inputSchema: {},
     },
@@ -292,8 +292,8 @@ export function buildServer({ apiKey, host, mcpizePaid = false } = {}) {
       annotations: { readOnlyHint: true, destructiveHint: false },
       description:
         "PAID PER CALL ($0.03 USDC on Base via x402). Market regime (chop / trend_up / " +
-        "trend_down / high_vol) plus a grid-suitability verdict, from the classifier steering " +
-        "a live production grid bot. Unpaid calls return the exact x402 payment terms.",
+        "trend_down / high_vol) plus a grid-suitability verdict, computed from live 24h " +
+        "market structure. Unpaid calls return the exact x402 payment terms.",
       inputSchema: {
         asset: z.enum(ASSETS).describe("Asset symbol, one of: " + ASSETS.join(", ")),
       },
@@ -308,8 +308,8 @@ export function buildServer({ apiKey, host, mcpizePaid = false } = {}) {
       annotations: { readOnlyHint: true, destructiveHint: false },
       description:
         "PAID PER CALL ($0.05 USDC on Base via x402). Recommended grid-trading parameters " +
-        "(range, spacing, order size) for a pair and capital amount, from a live production " +
-        "grid system. Unpaid calls return the exact x402 payment terms.",
+        "(range, spacing, order size) for a pair and capital amount, derived from live 24h " +
+        "market structure. Unpaid calls return the exact x402 payment terms.",
       inputSchema: {
         asset: z.enum(ASSETS).describe("Asset symbol, one of: " + ASSETS.join(", ")),
         capital: z.number().optional().describe("Capital in USD (default 1000)"),

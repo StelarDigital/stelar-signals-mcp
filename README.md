@@ -41,8 +41,7 @@ These call `https://api.stelardigital.com`, which answers HTTP 402 with a paymen
 challenge. Any x402-capable client settles it and retries automatically. Assets
 covered: SOL, BTC, ETH, XRP, DOGE, LTC, ADA, XLM.
 
-The same classifiers run a live production grid-trading system — these are not
-demo endpoints.
+These are live production endpoints backed by real market data — not demo stubs.
 
 ## Free-tier tools — these DO need a RapidAPI key
 
