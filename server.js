@@ -7,7 +7,7 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
 import { fileURLToPath } from "node:url";
-import path from "node:path";
+import fs from "node:fs";
 
 const ASSETS = ["SOL", "XLM", "BTC", "ETH", "XRP", "DOGE", "LTC", "ADA"];
 
@@ -81,7 +81,7 @@ export function buildServer({ apiKey, host, mcpizePaid = false } = {}) {
 
   const server = new McpServer({
     name: "stelar-signals-mcp",
-    version: "1.1.2",
+    version: "1.1.3",
   });
 
   server.registerTool(
@@ -369,8 +369,34 @@ export function buildServer({ apiKey, host, mcpizePaid = false } = {}) {
   return server;
 }
 
+// Entry-point detection. npm installs the `bin` as a SYMLINK in node_modules/.bin,
+// so when a user runs `npx stelar-signals-mcp` (the documented install path),
+// process.argv[1] is the symlink while import.meta.url is its realpath — a plain
+// path.resolve() comparison never matches and the server silently never starts.
+// Resolve BOTH sides through realpath. Prefer import.meta.main where the runtime
+// provides it (added in Node v24.2.0 and v22.18.0); it is undefined on older
+// runtimes, hence the fallback. `??` not `||`: a genuine `false` means "imported
+// as a library" and must be honored.
 const isMain =
-  process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+  import.meta.main ??
+  (() => {
+    if (!process.argv[1]) return false;
+    const here = fileURLToPath(import.meta.url);
+    try {
+      return fs.realpathSync(process.argv[1]) === fs.realpathSync(here);
+    } catch (e) {
+      // realpath can throw under Yarn PnP (module inside a zip), on a deleted
+      // file, or on permission errors. Never fail silently — a silent false is
+      // exactly the bug this block exists to fix. stderr only: stdout must
+      // carry nothing but JSON-RPC for the stdio transport.
+      if (process.argv[1] === here) return true;
+      console.error(
+        `[stelar-signals-mcp] entry-point detection failed (${e.code || e.message}); ` +
+          `server NOT started. argv[1]=${process.argv[1]} module=${here}`
+      );
+      return false;
+    }
+  })();
 
 if (isMain) {
   const server = buildServer({
